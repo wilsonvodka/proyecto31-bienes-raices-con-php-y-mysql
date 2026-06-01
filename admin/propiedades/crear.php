@@ -1,5 +1,11 @@
 <?php
 
+require '../../includes/funciones.php';
+$auth = estaAutenticado();
+
+if (!$auth) {
+    header('Location: /');
+}
 //base de datos
 require '../../includes/config/database.php';
 $db = conectarDB();
@@ -33,11 +39,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // echo '</pre>';
 
 
-    echo '<pre>';
+    // echo '<pre>';
 
-    var_dump($_FILES);
+    // var_dump($_FILES);
 
-    echo '</pre>';
+    // echo '</pre>';
 
 
 
@@ -57,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //asignar files hacia una variable
     $imagen = $_FILES['imagen'];
 
-    var_dump($imagen['name']);
+    // var_dump($imagen['name']);
 
 
 
@@ -105,21 +111,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     //revisar que el arreglo de errroes este vacio
     if (empty($errores)) {
+
+
+        //subida de archivos
+
+        //crear una carpeta
+        $carpetaImagenes = '../../imagenes/';
+        if (!is_dir($carpetaImagenes)) {
+            mkdir($carpetaImagenes);
+        }
+
+        //generar un nombre unico
+        $nombreImagen = md5(uniqid(rand(), true)) . '.jpg';
+
+
+        //subir la imagen
+        move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen);
+
+
         //insertar en la base de datos
-        $query = "INSERT INTO propiedades(titulo, precio,descripcion,habitaciones,wc,estacionamiento, creado, vendedorId) VALUES ('$titulo', '$precio', '$descripcion', '$habitaciones','$wc', '$estacionamiento','$creado', '$vendedorId')";
+        $query = "INSERT INTO propiedades(titulo, precio, imagen, descripcion,habitaciones,wc,estacionamiento, creado, vendedorId) VALUES ('$titulo', '$precio','$nombreImagen', '$descripcion', '$habitaciones','$wc', '$estacionamiento','$creado', '$vendedorId')";
         // echo $query;
 
         $resultado = mysqli_query($db, $query);
 
         if ($resultado) {
             // redirecionar
-            header('Location: /admin');
+            header('Location: /admin?resultado=1');
         }
     }
 }
 
 
-require '../../includes/funciones.php';
+
 incluirTemplate('header');
 ?>
 <main class="contenedor seccion">

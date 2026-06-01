@@ -18,8 +18,8 @@ incluirTemplate('header');
             <label for="nombre">Nombre:</label>
             <input type="text" id="nombre" placeholder="Tu nombre">
 
-            <label for="emial">Email:</label>
-            <input type="email" id="emial" placeholder="Tu emial">
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="Tu email">
 
             <label for="telefono">Telefono:</label>
             <input type="tel" id="telefono" placeholder="Tu telefono">

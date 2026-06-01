@@ -24,13 +24,18 @@
                     <img class="dark-mode-boton" src="/build/img/dark-mode.svg" alt="modo oscuro">
                     <nav class="navegacion">
                         <a href="nosotros.php">Nosotros</a>
-                        <a href="anuncios.php">Anuncio</a>
+                        <a href="anuncios.php">Anuncios</a>
                         <a href="blog.php">Blog</a>
                         <a href="contacto.php">Contacto</a>
                     </nav>
                 </div>
 
             </div> <!--barra-->
+            <?php 
+                if($inicio){
+                    echo "<h1>Venta de casas y departamentos exclusivos de lujo</h1>";
+                }
+            ?>
         </div>
     </header>
 
